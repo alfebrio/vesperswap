@@ -1,0 +1,85 @@
+{
+  "address": "AWs2xiQ996LJ984PyvkuBLciYtXvF9Ac3sip61NFwBct",
+  "metadata": {
+    "name": "spl_token_minter",
+    "version": "0.1.0",
+    "spec": "0.1.0",
+    "description": "Created with Anchor"
+  },
+  "instructions": [
+    {
+      "name": "burn_tokens",
+      "discriminator": [
+        76,
+        15,
+        51,
+        254,
+        229,
+        215,
+        121,
+        66
+      ],
+      "accounts": [
+        {
+          "name": "mint",
+          "writable": true
+        },
+        {
+          "name": "source",
+          "writable": true
+        },
+        {
+          "name": "authority",
+          "signer": true
+        },
+        {
+          "name": "token_program",
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+        }
+      ],
+      "args": [
+        {
+          "name": "amount",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "mint_tokens",
+      "discriminator": [
+        59,
+        132,
+        24,
+        246,
+        122,
+        39,
+        8,
+        243
+      ],
+      "accounts": [
+        {
+          "name": "mint",
+          "writable": true
+        },
+        {
+          "name": "destination",
+          "writable": true
+        },
+        {
+          "name": "authority",
+          "signer": true
+        },
+        {
+          "name": "token_program",
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+        }
+      ],
+      "args": [
+        {
+          "name": "amount",
+          "type": "u64"
+        }
+      ]
+    }
+  ]
+}

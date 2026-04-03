@@ -1,0 +1,466 @@
+/* ─── VesperSwap — Minimalist & Fluid Global Styles ─────────────────────────── */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+/* ─── Design Tokens ───────────────────────────────────────────────────────── */
+:root {
+  /* Palette: 
+     Jet Black: #2D3142
+     Blue Slate: #4F5D75
+     Silver: #BFC0C0
+     White: #FFFFFF
+     Coral Glow: #EF8354
+  */
+  
+  --bg-base: #2D3142;
+  --bg-surface: #4F5D75;
+  --bg-surface-elevated: rgba(191, 192, 192, 0.1);
+  --bg-input: rgba(45, 49, 66, 0.6);
+  
+  --border: rgba(191, 192, 192, 0.3);
+  --border-focus: #BFC0C0;
+  
+  --primary: #EF8354;
+  --primary-invert: #FFFFFF;
+  --secondary: #BFC0C0;
+  --secondary-hover: #FFFFFF;
+  --accent: #BFC0C0;
+  --danger: #ef4444;
+  --success: #10b981;
+  
+  --text-main: #FFFFFF;
+  --text-dim: #BFC0C0;
+  --text-muted: rgba(255, 255, 255, 0.5);
+  
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  
+  --fluid-spring: cubic-bezier(0.25, 1, 0.5, 1);
+  --transition-fast: all 0.2s var(--fluid-spring);
+  --transition-slow: all 0.5s var(--fluid-spring);
+  --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 20px 40px rgba(0, 0, 0, 0.25);
+}
+
+.light {
+  --bg-base: #FFFFFF;
+  --bg-surface: rgba(191, 192, 192, 0.15); /* Light Silver tint */
+  --bg-surface-elevated: #FFFFFF;
+  --bg-input: #FFFFFF;
+  
+  --border: #BFC0C0;
+  --border-focus: #4F5D75;
+  
+  --primary: #EF8354;
+  --primary-invert: #FFFFFF;
+  --secondary: #4F5D75;
+  --secondary-hover: #2D3142;
+  --accent: #4F5D75;
+  
+  --text-main: #2D3142;
+  --text-dim: #4F5D75;
+  --text-muted: #8b8c8d;
+  
+  --shadow-sm: 0 4px 12px rgba(45, 49, 66, 0.05);
+  --shadow-lg: 0 20px 40px rgba(45, 49, 66, 0.1);
+}
+
+/* ─── Reset & Base ────────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  background-color: var(--bg-base);
+  color: var(--text-main);
+  min-height: 100vh;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::selection {
+  background: var(--text-main);
+  color: var(--bg-base);
+}
+
+/* ─── Layout ──────────────────────────────────────────────────────────────── */
+.app-container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 0;
+  margin-bottom: 32px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 1.25rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--text-main);
+}
+
+.brand-icon {
+  width: 32px;
+  height: 32px;
+  background: var(--text-main);
+  color: var(--bg-base);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9rem;
+}
+
+.network-badge {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--text-dim);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  background: var(--bg-surface);
+  border-radius: 99px;
+  border: 1px solid var(--border);
+}
+
+.network-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: var(--success);
+}
+
+/* ─── Dashboard Grid ──────────────────────────────────────────────────────── */
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-bottom: 80px;
+}
+
+/* ─── Utility Components ─────────────────────────────────────────────────── */
+.glass-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  position: relative;
+  transition: var(--transition-slow);
+}
+
+.glass-card:hover {
+  border-color: var(--border-focus);
+  transform: translateY(-2px) scale(1.005);
+  box-shadow: var(--shadow-lg);
+}
+
+.card-title {
+  font-size: 1.1rem;
+  font-weight: 500;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--text-main);
+}
+
+.card-title svg {
+  color: var(--text-dim);
+}
+
+/* ─── Input & Actions ─────────────────────────────────────────────────────── */
+.input-group {
+  margin-bottom: 16px;
+}
+
+.input-label {
+  display: block;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-bottom: 6px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.input-field {
+  width: 100%;
+  background: var(--bg-input);
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  padding: 12px 14px;
+  color: var(--text-main);
+  outline: none;
+  font-family: inherit;
+  font-size: 0.95rem;
+  transition: var(--transition-fast);
+}
+
+.input-field:focus {
+  background: var(--bg-surface-elevated);
+  border-color: var(--border-focus);
+}
+
+.button-rows {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+/* ─── Buttons ─────────────────────────────────────────────────────────────── */
+.btn-premium {
+  padding: 12px 20px;
+  border-radius: var(--radius-sm);
+  font-weight: 500;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: var(--transition-fast);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: 0.9rem;
+}
+
+.btn-premium:active {
+  transform: scale(0.98);
+}
+
+.btn-primary {
+  background: var(--primary);
+  color: var(--primary-invert);
+}
+
+.btn-primary:hover {
+  opacity: 0.9;
+}
+
+.btn-secondary {
+  background: var(--secondary);
+  color: var(--text-main);
+  border: 1px solid var(--border);
+}
+
+.btn-secondary:hover {
+  background: var(--secondary-hover);
+}
+
+.btn-outline {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text-main);
+}
+
+.btn-outline:hover {
+  border-color: var(--text-dim);
+}
+
+.btn-premium:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* ─── Counter Specifics ───────────────────────────────────────────────────── */
+.counter-hero {
+  text-align: center;
+  margin-bottom: 24px;
+  padding: 16px 0;
+  background: var(--bg-base);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border);
+}
+
+.counter-val {
+  font-size: 3.5rem;
+  font-weight: 300;
+  letter-spacing: -0.04em;
+  color: var(--text-main);
+  line-height: 1;
+  transition: var(--transition-fast);
+}
+
+.animate-pulse {
+  transform: scale(1.05);
+  color: var(--text-dim);
+}
+
+/* ─── Animations ──────────────────────────────────────────────────────────── */
+@keyframes slide-up-fade {
+  from { opacity: 0; transform: translateY(15px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-up {
+  animation: slide-up-fade 0.6s var(--fluid-spring) forwards;
+}
+
+/* ─── Wallet Adapter Overrides ────────────────────────────────────────────── */
+.wallet-adapter-button {
+  background: var(--primary) !important;
+  color: var(--primary-invert) !important;
+  border: none !important;
+  border-radius: 99px !important;
+  box-shadow: none !important;
+  height: 48px !important;
+  font-size: 0.95rem !important;
+  font-weight: 500 !important;
+  transition: var(--transition-fast) !important;
+  padding: 0 20px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.wallet-adapter-button:hover {
+  opacity: 0.85 !important;
+}
+
+.wallet-adapter-button:active {
+  transform: scale(0.98) !important;
+}
+
+/* ─── Wallet Modal Fixes ──────────────────────────────────────────────────── */
+
+/* Wrapper & Titles */
+.wallet-adapter-modal-wrapper {
+  background: var(--bg-base) !important;
+  border: 1px solid var(--border) !important;
+  color: var(--text-main) !important;
+  box-shadow: var(--shadow-lg) !important;
+}
+
+.wallet-adapter-modal-title {
+  color: var(--text-main) !important;
+}
+
+.wallet-adapter-modal-button-close {
+  background: var(--bg-surface) !important;
+  color: var(--text-main) !important;
+  transition: var(--transition-fast) !important;
+}
+
+.wallet-adapter-modal-button-close svg {
+  fill: var(--text-dim) !important;
+  transition: var(--transition-fast) !important;
+}
+
+.wallet-adapter-modal-button-close:hover {
+  background: var(--bg-input) !important;
+}
+
+.wallet-adapter-modal-button-close:hover svg {
+  fill: var(--primary) !important;
+}
+
+/* Modal List */
+.wallet-adapter-modal-list {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 12px !important;
+  margin: 0 !important;
+  padding: 0 24px 24px 24px !important;
+}
+
+.wallet-adapter-modal-list .wallet-adapter-button {
+  background: var(--bg-surface) !important;
+  color: var(--text-main) !important;
+  border: 1px solid var(--border) !important;
+  justify-content: flex-start !important;
+}
+
+.wallet-adapter-modal-list .wallet-adapter-button:hover {
+  background: var(--bg-input) !important;
+  border-color: var(--border-focus) !important;
+}
+
+.wallet-adapter-modal-list-more {
+  color: var(--text-muted) !important;
+}
+
+/* ─── Hero Section ────────────────────────────────────────────────────────── */
+.hero-header {
+  margin-bottom: 32px;
+  max-width: 720px;
+}
+
+.hero-title {
+  font-size: 2.75rem;
+  font-weight: 700;
+  margin-bottom: 12px;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+  color: var(--text-main);
+  transition: var(--transition-fast);
+}
+
+.hero-subtitle {
+  font-size: 1.1rem;
+  color: var(--text-dim);
+  line-height: 1.6;
+  font-weight: 400;
+  transition: var(--transition-fast);
+}
+
+/* ─── Responsive Adjustments ──────────────────────────────────────────────── */
+@media screen and (max-width: 768px) {
+  .app-container {
+    padding: 0 16px;
+  }
+  
+  .navbar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 16px 0;
+    margin-bottom: 24px;
+  }
+
+  .network-badge {
+    display: none; /* Hide devnet badge on small screens for brevity */
+  }
+
+  .hero-header {
+    margin-bottom: 24px;
+  }
+
+  .hero-title {
+    font-size: 2rem;
+  }
+
+  .hero-subtitle {
+    font-size: 1rem;
+  }
+
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+
+  .glass-card {
+    padding: 20px;
+  }
+  
+  .counter-val {
+    font-size: 3rem;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .button-rows {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+}

@@ -1,0 +1,54 @@
+# Prerequisites
+Pastikan hal-hal berikut sudah terpasang di sistem sistem operasi (disarankan WSL2 untuk Windows):
+
+1. Node.js & npm/yarn (untuk dependencies frontend & Anchor ts-mocha)
+2. Rust & Cargo (untuk smart contract):
+   curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+
+3. Solana CLI (untuk interaksi blockchain):
+   sh -c "$(curl -sSfL https://release.solana.com/v1.18.15/install)"
+
+4. Anchor CLI (framework Solana):
+   cargo install --git https://github.com/coral-xyz/anchor avm --locked --force
+   avm install latest
+   avm use latest
+
+
+# Command (WSL) yang Perlu Dijalankan untuk Menjalankan Program
+Langkah-langkah berikut diasumsikan dari saat Anda baru melakukan `git clone`.
+
+1. Masuk ke folder root proyek (setelah melakukan proses clone):
+   cd vesperswap
+
+2. Install dependencies Anchor & Node:
+   yarn install
+   # Atau jika menggunakan npm: npm install
+
+3. Buat Keypair baru (jika di WSL belum ada file id.json) dan atur network ke devnet:
+   solana-keygen new
+   solana config set --url devnet
+   
+   # Dapatkan modal SOL gratis untuk biaya deploy:
+   solana airdrop 2
+
+4. Sinkronisasi ID
+   anchor keys sync
+
+5. Build program Rust (Smart Contract):
+   anchor build
+   # (Pastikan program id di file rust sesuai dengan yang di Anchor.toml setelah build)
+
+6. Deploy program ke blockchain Devnet:
+   anchor deploy
+
+7. Masuk ke folder Frontend (Web React/Vite):
+   cd app
+
+8. Install dependencies Frontend:
+   npm install
+   npm audit fix
+
+9. Jalankan Web UI:
+   npm run dev
+
+Aplikasi kemudian berjalan dan dapat dilihat di http://localhost:5173 / sesuai terminal vite.
