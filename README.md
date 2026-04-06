@@ -1,5 +1,7 @@
 # VesperSwap
 
+![VesperCount Preview](./image.png)
+
 A full-stack **Solana Decentralized Application (DApp)** built with the **Anchor** framework for on-chain programs (Rust) and **React + Vite** for the frontend (TypeScript).
 
 This monorepo bundles three independent smart contract programs and a unified, premium web interface to interact with all of them on the Solana **Devnet**.
