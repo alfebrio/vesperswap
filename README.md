@@ -86,15 +86,12 @@ vesperswap/
 │   └── deploy.ts
 │
 ├── programs/                               # Rust smart contracts (Anchor)
-│   ├── nft_minter/                         # NFTs with treasury fee
-│   │   ├── Cargo.toml
-│   │   └── src/lib.rs
-│   ├── spl_token_minter/                   # SPL token mint/burn logic
-│   │   ├── Cargo.toml
-│   │   └── src/lib.rs
-│   └── vesperswap/                         # AMM token swap logic
-│       ├── Cargo.toml
-│       └── src/lib.rs
+│   ├── nft_minter/
+│   │   └── src/lib.rs                      # NFTs with treasury fee
+│   ├── spl_token_minter/
+│   │   └── src/lib.rs                      # SPL token mint/burn logic
+│   └── vesperswap/
+│       └── src/lib.rs                      # AMM token swap logic
 │
 ├── tests/                                  # Integration tests (ts-mocha)
 │   ├── nft_minter.ts
