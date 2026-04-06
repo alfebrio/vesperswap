@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { useCounter } from "../hooks/useCounter";
+import { Skeleton } from "./Skeleton";
+import { useToast } from "./ToastContext";
 
 export function CounterCard() {
   const { connected } = useWallet();
@@ -9,6 +11,7 @@ export function CounterCard() {
 
   const [bumping, setBumping] = useState(false);
   const prevCount = useRef(count);
+  const { showToast } = useToast();
 
   useEffect(() => {
     if (count !== prevCount.current) {
@@ -18,6 +21,14 @@ export function CounterCard() {
       return () => clearTimeout(t);
     }
   }, [count]);
+
+  useEffect(() => {
+    if (error) showToast(error, 'error');
+  }, [error]);
+
+  useEffect(() => {
+    if (lastTx) showToast('Transaction completed!', 'success', `https://solscan.io/tx/${lastTx}?cluster=devnet`);
+  }, [lastTx]);
 
   const isLoading = loading || txLoading !== null;
 
@@ -38,7 +49,7 @@ export function CounterCard() {
     );
   }
 
-  if (!initialized && !loading) {
+  if (!initialized && !loading && (txLoading as string) !== "initialize") {
     return (
       <div className="glass-card">
         <h3 className="card-title">Counter Engine</h3>
@@ -69,7 +80,11 @@ export function CounterCard() {
 
       <div className="counter-hero">
         <div className={`counter-val ${bumping ? "animate-pulse" : ""}`}>
-          {count}
+          {loading ? (
+            <Skeleton width={100} height={56} style={{ margin: '0 auto' }} />
+          ) : (
+            count
+          )}
         </div>
         <p style={{ color: 'var(--text-muted)', fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '0.1em' }}>Current Value</p>
       </div>
@@ -80,14 +95,14 @@ export function CounterCard() {
           onClick={decrement}
           disabled={isLoading}
         >
-          {txLoading === "decrement" ? "Wait..." : "Decrement"}
+          {txLoading === "decrement" ? <Skeleton width={60} height={20} /> : "Decrement"}
         </button>
         <button
           className="btn-premium btn-secondary"
           onClick={increment}
           disabled={isLoading}
         >
-          {txLoading === "increment" ? "Wait..." : "Increment"}
+          {txLoading === "increment" ? <Skeleton width={60} height={20} /> : "Increment"}
         </button>
       </div>
 
@@ -103,19 +118,6 @@ export function CounterCard() {
           </div>
         )}
       </div>
-
-      {error && <div style={{ color: 'var(--danger)', fontSize: '0.8rem', marginTop: 16 }}>⚠️ {error}</div>}
-
-      {lastTx && (
-        <a
-          href={`https://solscan.io/tx/${lastTx}?cluster=devnet`}
-          target="_blank"
-          rel="noreferrer"
-          style={{ display: 'block', marginTop: 12, fontSize: '0.75rem', color: 'var(--primary)', opacity: 0.8 }}
-        >
-          ↗ View Last Tx on Solscan
-        </a>
-      )}
     </div>
   );
 }

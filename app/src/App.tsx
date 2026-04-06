@@ -1,93 +1,49 @@
-import { useMemo, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
+import { AnimatePresence } from "framer-motion";
+import { Navbar } from "./components/Navbar";
+import { Footer } from "./components/Footer";
+import { FluidBackground } from "./components/FluidBackground";
+
+import { SwapPage } from "./pages/SwapPage";
+import { TokenFactoryPage } from "./pages/TokenFactoryPage";
+import { NftStudioPage } from "./pages/NftStudioPage";
+
+// Wallet providers included as requested (mock context or real if wired in main)
 import { ConnectionProvider, WalletProvider } from "@solana/wallet-adapter-react";
 import { WalletAdapterNetwork } from "@solana/wallet-adapter-base";
 import { WalletModalProvider } from "@solana/wallet-adapter-react-ui";
-import {
-  PhantomWalletAdapter,
-  SolflareWalletAdapter,
-} from "@solana/wallet-adapter-wallets";
-import { clusterApiUrl } from "@solana/web3.js";
-
-// ⚠️ Import default styles wallet adapter
 import "@solana/wallet-adapter-react-ui/styles.css";
 
-import { CounterCard } from "./components/CounterCard";
-import { TokenCard } from "./components/TokenCard";
-import { NftCard } from "./components/NftCard";
-import { WalletButton } from "./components/WalletButton";
-
-export default function App() {
-  const network = WalletAdapterNetwork.Devnet;
-  const endpoint = useMemo(
-    () =>
-      import.meta.env.VITE_RPC_URL ?? clusterApiUrl(network),
-    [network]
-  );
-
-  const [isLightMode, setIsLightMode] = useState(false);
-
-  useEffect(() => {
-    if (isLightMode) {
-      document.body.classList.add('light');
-    } else {
-      document.body.classList.remove('light');
-    }
-  }, [isLightMode]);
-
-  const wallets = useMemo(
-    () => [new PhantomWalletAdapter(), new SolflareWalletAdapter()],
-    []
-  );
+function App() {
+  const [activeTab, setActiveTab] = useState("swap");
 
   return (
-    <ConnectionProvider endpoint={endpoint}>
-      <WalletProvider wallets={wallets} autoConnect>
+    <ConnectionProvider endpoint="https://api.devnet.solana.com">
+      <WalletProvider wallets={[]} autoConnect>
         <WalletModalProvider>
-          <div className="app-container animate-up">
-            <nav className="navbar">
-              <div className="brand">
-                <div className="brand-icon">⌘</div>
-                VesperSwap
-              </div>
+          {/* WebGL Fluid Background - Fixed, z:0 */}
+          <FluidBackground />
 
-              <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
-                <button
-                  onClick={() => setIsLightMode(!isLightMode)}
-                  className="btn-outline"
-                  style={{ padding: '8px 16px', borderRadius: '99px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.2rem', border: '1px solid var(--border)' }}
-                  title="Toggle Theme"
-                >
-                  {isLightMode ? '🌙' : '☀️'}
-                </button>
-                <div className="network-badge">
-                  <div className="network-dot" />
-                  Devnet
-                </div>
-                <WalletButton />
-              </div>
-            </nav>
+          <div className="min-h-screen flex flex-col relative z-10 selection:bg-coral/30">
+            {/* Top Navbar */}
+            <Navbar activeTab={activeTab} setActiveTab={setActiveTab} />
 
-            <header className="hero-header">
-              <h1 className="hero-title">
-                The New Standard for On-Chain Interactions
-              </h1>
-              <p className="hero-subtitle">
-                Interact with counters, mint SPL tokens, and create Master Edition NFTs with brutalist precision on Solana.
-              </p>
-            </header>
+            {/* Main Content Area */}
+            <main className="flex-grow pt-16 flex flex-col">
+              <AnimatePresence mode="wait">
+                {activeTab === "swap" && <SwapPage key="swap" />}
+                {activeTab === "token" && <TokenFactoryPage key="token" />}
+                {activeTab === "nft" && <NftStudioPage key="nft" />}
+              </AnimatePresence>
+            </main>
 
-            <div className="dashboard-grid">
-              <CounterCard />
-              <TokenCard />
-              <NftCard />
-            </div>
-
-            <footer style={{ padding: '40px 0', borderTop: '1px solid var(--border)', textAlign: 'center', color: 'var(--text-muted)', fontSize: '0.9rem' }}>
-              Built with precision for the Solana ecosystem. &copy; 2026 VesperSwap
-            </footer>
+            {/* Matcha-style Footer */}
+            <Footer />
           </div>
         </WalletModalProvider>
       </WalletProvider>
     </ConnectionProvider>
   );
 }
+
+export default App;
