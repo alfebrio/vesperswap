@@ -1,6 +1,6 @@
 # VesperSwap
 
-![VesperCount Preview](./image.png)
+![VesperSwap Preview](./image.png)
 
 A full-stack **Solana Decentralized Application (DApp)** built with the **Anchor** framework for on-chain programs (Rust) and **React + Vite** for the frontend (TypeScript).
 
